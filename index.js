@@ -1,5 +1,5 @@
-const playerPoints = 0;
-const computerPoints = 0;
+let playerPoints = 0;
+let computerPoints = 0;
 
 class Hand {
   static Rock = new Hand("rock");
@@ -15,31 +15,31 @@ game();
 
 // min included, max excluded
 function randomInt(min, max) {
-  return Math.floor(Math.random * (max - min)) + min;
+  return Math.floor(Math.random() * (max - min)) + min;
 }
 
 function getComputerHand() {
   let choice = randomInt(0, 3);
   let hand;
-  switch (choice) {
-    case 0:
+  switch (Number(choice)) {
+    case Number(0):
       hand = Hand.Rock;
       break;
-    case 1:
+    case Number(1):
       hand = Hand.Paper;
       break;
-    default:
+    case Number(2):
       hand = Hand.Scissors;
       break;
   }
 
-  console.log("computer played: " + hand);
+  console.log("computer played: " + hand.name);
   return hand;
 }
 
 function getPlayerHand() {
   // TODO: replace this primitive user prompt with gui
-  let choice = prompt("Type in 'Rock', 'Paper', or 'Scissors'.").toLowerCase;
+  let choice = prompt("Type in 'Rock', 'Paper', or 'Scissors'.").toLowerCase();
   let hand;
   switch (choice) {
     case "rock":
@@ -53,7 +53,7 @@ function getPlayerHand() {
       break;
   }
 
-  console.log("player played: " + hand);
+  console.log("player played: " + hand.name);
   return hand;
 }
 
@@ -61,7 +61,7 @@ function playRound() {
   let player = getPlayerHand();
   let computer = getComputerHand();
 
-  let winner = "PLAYER";
+  let winner;
   if (
     (player === Hand.Rock && computer === Hand.Scissors) ||
     (player === Hand.Scissors && computer === Hand.Paper) ||
@@ -72,18 +72,25 @@ function playRound() {
   } else if (player === computer) {
     winner = "DRAW";
   } else {
-    winner == "COMPUTER";
-    computerPoints;
+    winner = "COMPUTER";
+    computerPoints++;
   }
 
-  console.log(winner + " won the round.\n");
+  if (winner === "DRAW") {
+    console.log(winner + ".");
+  } else {
+    console.log(
+      `${winner} won the round. Score: ${playerPoints} - ${computerPoints}.`
+    );
+  }
   return winner;
 }
 
 function game() {
+  let winner;
   while (playerPoints < 5 && computerPoints < 5) {
-    let winner = playRound();
+    winner = playRound();
   }
 
-  console.log(winner + " won the game.\n");
+  console.log(winner + " won the game.");
 }
