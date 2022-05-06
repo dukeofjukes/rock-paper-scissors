@@ -1,3 +1,18 @@
+const rockBtn = document.getElementById("rock-btn");
+const paperBtn = document.getElementById("paper-btn");
+const scissorsBtn = document.getElementById("scissors-btn");
+
+// TODO: find a better way, get param from button attribute?
+rockBtn.addEventListener("click", function () {
+  playRound("rock");
+});
+paperBtn.addEventListener("click", function () {
+  playRound("paper");
+});
+scissorsBtn.addEventListener("click", function () {
+  playRound("scissors");
+});
+
 let playerPoints = 0;
 let computerPoints = 0;
 
@@ -11,7 +26,7 @@ class Hand {
   }
 }
 
-game();
+// game();
 
 // min included, max excluded
 function randomInt(min, max) {
@@ -37,9 +52,7 @@ function getComputerHand() {
   return hand;
 }
 
-function getPlayerHand() {
-  // TODO: replace this primitive user prompt with gui
-  let choice = prompt("Type in 'Rock', 'Paper', or 'Scissors'.").toLowerCase();
+function getPlayerHand(choice) {
   let hand;
   switch (choice) {
     case "rock":
@@ -57,8 +70,8 @@ function getPlayerHand() {
   return hand;
 }
 
-function playRound() {
-  let player = getPlayerHand();
+function playRound(playerChoice) {
+  let player = getPlayerHand(playerChoice);
   let computer = getComputerHand();
 
   let winner;
@@ -86,11 +99,11 @@ function playRound() {
   return winner;
 }
 
-function game() {
-  let winner;
-  while (playerPoints < 5 && computerPoints < 5) {
-    winner = playRound();
-  }
+// function game() {
+//   let winner;
+//   while (playerPoints < 5 && computerPoints < 5) {
+//     winner = playRound();
+//   }
 
-  console.log(winner + " won the game.");
-}
+//   console.log(winner + " won the game.");
+// }
