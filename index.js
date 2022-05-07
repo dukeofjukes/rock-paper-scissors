@@ -1,6 +1,8 @@
 const rockBtn = document.getElementById("rock-btn");
 const paperBtn = document.getElementById("paper-btn");
 const scissorsBtn = document.getElementById("scissors-btn");
+const outputDiv = document.getElementById("output-div");
+const scoreDiv = document.getElementById("score-div");
 
 // TODO: find a better way, get param from button attribute?
 rockBtn.addEventListener("click", function () {
@@ -26,7 +28,13 @@ class Hand {
   }
 }
 
-// game();
+function output(text) {
+  outputDiv.textContent = text;
+}
+
+function updateScore() {
+  scoreDiv.innerText = `Score: ${playerPoints} - ${computerPoints}`;
+}
 
 // min included, max excluded
 function randomInt(min, max) {
@@ -47,8 +55,6 @@ function getComputerHand() {
       hand = Hand.Scissors;
       break;
   }
-
-  console.log("computer played: " + hand.name);
   return hand;
 }
 
@@ -65,8 +71,6 @@ function getPlayerHand(choice) {
       hand = Hand.Scissors;
       break;
   }
-
-  console.log("player played: " + hand.name);
   return hand;
 }
 
@@ -90,20 +94,20 @@ function playRound(playerChoice) {
   }
 
   if (winner === "DRAW") {
-    console.log(winner + ".");
+    output(
+      `Player played ${player.name}.
+      Computer played ${computer.name}.
+      ${winner}.`
+    );
   } else {
-    console.log(
-      `${winner} won the round. Score: ${playerPoints} - ${computerPoints}.`
+    output(
+      `Player played ${player.name}.
+      Computer played ${computer.name}.
+      ${winner} won the round.`
     );
   }
+
+  updateScore();
+
   return winner;
 }
-
-// function game() {
-//   let winner;
-//   while (playerPoints < 5 && computerPoints < 5) {
-//     winner = playRound();
-//   }
-
-//   console.log(winner + " won the game.");
-// }
